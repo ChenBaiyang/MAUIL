@@ -32,15 +32,16 @@ For the wd dataset, a wiki Chinese corpus is need to train the word vector. plea
 ## Citation
 If you found this model or code useful, please cite it as follows:      
 ```
-@ARTICLE{2020arXiv201200936C,
-       author = {{Chen}, Baiyang and {Chen}, Xiaoliang},
-        title = "{MAUIL: Multi-level Attribute Embedding for Semi-supervised User Identity Linkage}",
-      journal = {arXiv e-prints},
-         year = 2020,
-        month = dec,
-          eid = {arXiv:2012.00936},
-archivePrefix = {arXiv},
-       eprint = {2012.00936},
+@ARTICLE{Chen2022MAUIL,
+       title = {{MAUIL}: Multilevel attribute embedding for semisupervised user identity linkage},
+       author = {Baiyang Chen and Xiaoliang Chen},
+       journal = {Information Sciences},
+       volume = {593},
+       pages = {527-545},
+       year = {2022},
+       issn = {0020-0255},
+       doi = {10.1016/j.ins.2022.02.023},
+       url = {https://www.sciencedirect.com/science/article/pii/S0020025522001578}
 }
 ```
 
