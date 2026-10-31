@@ -7,6 +7,10 @@ user identity linkage**, Information Sciences 593 (2022), 527–545.
 MAUIL combines character, word, topic and network embeddings, aligns two networks
 using labeled user pairs and RCCA, then ranks candidate users by Euclidean distance.
 
+This work also contributes **two social network alignment datasets constructed
+in this study: Weibo–Douban (WD) and DBLP17-19 (DBLP)**, available in this
+repository for user identity linkage research.
+
 ## Changes from v1.0 to v2.0
 
 - **PyTorch replaces TensorFlow/Keras** for the character autoencoder and LINE.
@@ -22,31 +26,15 @@ using labeled user pairs and RCCA, then ranks candidate users by Euclidean dista
 Pretrained vectors and the framework optimizer change the training trajectory;
 v2.0 results are reported below alongside the paper's results.
 
-## Installation
+## Environment
 
-Python 3.10 is recommended. Install in a dedicated environment:
+Python 3.10 / PyTorch 2.11 is recommended; Python 3.8 / PyTorch 1.8 is also
+supported. Dependencies are defined in `pyproject.toml`, with recommended
+Python 3.10 versions pinned in `requirements.txt`.
 
-```bash
-conda create -n mauil python=3.10 -y
-conda activate mauil
-python -m pip install -c requirements.txt .
-python example.py
-```
-
-`requirements.txt` pins the recommended dependencies. Python 3.8 / PyTorch 1.8
-is also supported; use `python -m pip install .` in an existing environment
-without these Python 3.10 constraints.
-
-CPU is the default. For a GPU, install a CUDA build using the
-[PyTorch installer](https://pytorch.org/get-started/locally/) and pass
-`device='cuda'` to `MAUIL`, or `--device cuda` to the experiment script.
-PyTorch handles the character and LINE training; text processing and RCCA use CPU.
-
-English raw-text preprocessing needs two NLTK resources, prepared once:
-
-```bash
-python -m nltk.downloader wordnet stopwords
-```
+CPU is the default. GPU training requires a CUDA-enabled PyTorch installation
+and explicit GPU selection. English raw-text preprocessing requires the NLTK
+WordNet and stopwords resources.
 
 ## Using MAUIL
 
@@ -139,6 +127,38 @@ caches all four embedding blocks. Cache keys include input content, resource
 identity, configuration and software versions; incompatible caches are not reused.
 `line_backend='auto'` selects fused Adam on supported PyTorch 2.11+ CPUs;
 `'torch'` selects ordinary Adam for LINE.
+
+## Datasets
+
+Both datasets were constructed for this study. Their networks, user attributes
+and ground-truth identity links are provided in `data/wd.zip` and `data/dblp.zip`.
+
+### Weibo–Douban (WD)
+
+Some Douban users publish links to their Weibo accounts on their homepages.
+These cross-platform links identify the same users and provide ground-truth
+aligned pairs for user identity linkage. User attributes and follower/followee
+relations were collected from profile pages on both platforms.
+
+At the time of collection, Weibo exposed only up to 200 follower/followee
+relations per user to crawlers, leaving the collected network incomplete.
+To extract manageable subnetworks from the large original network, nodes with
+degree below 2 or above 1000 were repeatedly removed. Community detection then
+identified subnetworks with typical social-network characteristics, including
+an approximately power-law degree distribution and a high clustering
+coefficient. Similar processing was applied to the Douban network.
+
+### DBLP17-19 (DBLP)
+
+Each DBLP author has a unique key, which provides ground-truth identity links
+across snapshots. The dataset uses the **2017-12-01** and **2018-12-01** DBLP
+snapshots as the two networks to align.
+
+In each network, Turing Award winner Yoshua Bengio was selected as the center
+node, and nodes more than three hops away were removed. Community detection
+and repeated leaf-node removal further reduced the network sizes. The resulting
+networks retain an approximately power-law degree distribution and a high
+clustering coefficient.
 
 ## Paper experiments
 
