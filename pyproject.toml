@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61,<76", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mauil"
+version = "2.0"
+description = "Multilevel attribute embedding for semisupervised user identity linkage"
+readme = "README.md"
+requires-python = ">=3.8,<3.13"
+license = {text = "MIT"}
+authors = [{name = "Baiyang Chen"}]
+dependencies = [
+    "torch>=1.8.2",
+    "numpy>=1.20,<2",
+    "scipy>=1.10,<1.14",
+    "gensim==4.3.3",
+    "networkx>=2.8,<3.5",
+    "scikit-learn>=1.0,<1.8",
+    "nltk>=3.6,<3.10",
+    "jieba==0.42.1",
+    "zhconv==1.4.3",
+    "pypinyin==0.49.0",
+    "huggingface_hub==0.24.7",
+    "joblib>=1.1,<2",
+    "threadpoolctl>=3,<4",
+]
+
+[project.urls]
+Repository = "https://github.com/ChenBaiyang/MAUIL"
+
+[tool.setuptools]
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.txt"]
+
+[tool.setuptools.packages.find]
+include = ["mauil*"]

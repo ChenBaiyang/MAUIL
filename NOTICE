@@ -1,0 +1,16 @@
+MAUIL includes adaptations of the following third-party implementations:
+
+* GraphEmbedding LINE and alias sampling, by Weichen Shen.
+  https://github.com/shenweichen/GraphEmbedding
+  Copyright (c) 2019 Weichen Shen. MIT License.
+  The PyTorch LINE architecture and sampler in mauil/embedding.py are adapted
+  from the implementation bundled with the original MAUIL repository.
+
+* Pyrcca, by Natalia Y. Bilenko and Jack L. Gallant, UC Berkeley.
+  https://github.com/gallantlab/pyrcca
+  Original MAUIL attributes Copyright 2016, UC Berkeley, Gallant lab.
+  Pyrcca's Regents license permits educational, research and not-for-profit use;
+  see its full terms in THIRD_PARTY_LICENSES.txt. The generalized RCCA
+  formulation in mauil/alignment.py preserves the original MAUIL/Pyrcca scaling.
+
+Third-party license texts are provided in THIRD_PARTY_LICENSES.txt.
