@@ -4,8 +4,16 @@ Implementation of **MAUIL: Multilevel attribute embedding for semisupervised
 user identity linkage**, Information Sciences 593 (2022), 527–545.
 [Paper](https://doi.org/10.1016/j.ins.2022.02.023).
 
-MAUIL combines character, word, topic and network embeddings, aligns two networks
-using labeled user pairs and RCCA, then ranks candidate users by Euclidean distance.
+## Abstract
+
+MAUIL is a semisupervised framework for user identity linkage that captures
+heterogeneous user attributes through **character-, word- and topic-level
+embeddings**, extracting textual patterns and semantic information without
+requiring annotated text. It integrates these complementary attribute features
+with network structure to address missing attributes and sparse connections.
+From a **multiview perspective**, RCCA uses a small set of labeled user pairs to
+learn projections that maximize cross-network correlation in a shared feature
+space. Candidate users are then ranked by Euclidean distance in this space.
 
 This work also contributes **two social network alignment datasets constructed
 in this study: Weibo–Douban (WD) and DBLP17-19 (DBLP)**, available in this
@@ -103,16 +111,17 @@ generalized eigensolver for degenerate projections.
 The Chinese resource is general-purpose, not Weibo-specific. Downloads use pinned
 Hugging Face revisions and SHA256 checksums. English phrases use a complete
 entry when available, otherwise known underscore-separated words are summed.
-Coverage is available in `model.word_coverage_`; entirely unmatched nonempty text
-raises an error.
+Entirely unmatched nonempty text raises an error.
 
 ```python
 from mauil import load_pretrained_vectors, load_word_vectors
 
 # Download once; later calls reuse this cache.
 vectors = load_pretrained_vectors('zh', cache_dir='models')
+
 # Offline: cached files must already exist.
 vectors = load_pretrained_vectors('zh', cache_dir='models', local_files_only=True)
+
 # Alternatively load your own vectors and pass word_vectors=vectors to fit().
 vectors = load_word_vectors('custom.bin', format='word2vec-binary')
 ```
@@ -140,7 +149,7 @@ These cross-platform links identify the same users and provide ground-truth
 aligned pairs for user identity linkage. User attributes and follower/followee
 relations were collected from profile pages on both platforms.
 
-At the time of collection, Weibo exposed only up to 200 follower/followee
+At the time of collection (2021), Weibo exposed only up to 200 follower/followee
 relations per user to crawlers, leaving the collected network incomplete.
 To extract manageable subnetworks from the large original network, nodes with
 degree below 2 or above 1000 were repeatedly removed. Community detection then
@@ -183,13 +192,11 @@ scores `(k - r + 1) / k`; otherwise it scores zero.
 
 | Dataset | Paper HP@1 / @3 / @5 | v2.0 HP@1 / @3 / @5 |
 |---|---|---|
-| WD | 0.313 / 0.373 / 0.408 | 0.306533 / 0.374000 / 0.414787 |
-| DBLP | 0.660 / 0.702 / 0.725 | 0.697533 / 0.740800 / 0.763800 |
+| WD | 0.313 / 0.373 / 0.408 | 0.307 / 0.374 / 0.415 |
+| DBLP | 0.660 / 0.702 / 0.725 | 0.698 / 0.741 / 0.764 |
 
-The v2.0 means use all 3 × 10 runs on Python 3.10 / PyTorch 2.11 CPU. All six
-values lie within −2 to +5 percentage points of the paper. GPU results have not
-been verified. Table 4 is not supported because its negative-pair and prediction
-decision protocol could not be recovered.
+The v2.0 means use all 3 × 10 runs on Python 3.10 / PyTorch 2.11 CPU. GPU results have not
+been verified.
 
 Additional options (see `--help`):
 
